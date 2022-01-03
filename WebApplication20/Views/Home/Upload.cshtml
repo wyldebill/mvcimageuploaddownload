@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="file" name="ImageData" id="ImageData" onchange="fileCheck(this);" />
+    <input type="submit" />
+
+}
+
+@Html.ActionLink("View upload", "ViewUpload", "Home");
+
+
