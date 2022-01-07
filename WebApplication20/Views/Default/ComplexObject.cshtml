@@ -1,0 +1,37 @@
+﻿@model WebApplication20.Models.MyComplexObject
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@using (@Html.BeginForm("ComplexObject", "Default", FormMethod.Post)) { 
+
+@Html.LabelFor(m => m.UserName);
+@Html.EditorFor(m => m.UserName);
+
+
+}
+<button type="button" id="button1">Load Partial View</button>
+
+
+
+
+<h2>there should be a partial view that loads below the horizontal line</h2>
+<hl></hl>
+
+<div id="results"></div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            console.log('jquery ready to go boss!');
+
+           
+            
+            $("#button1").click(function () {
+                name = $('#UserName').val();
+                $("#results").load("/Default/ComplexObject", {'UserName': name});
+            });
+
+        });
+    </script>
+}

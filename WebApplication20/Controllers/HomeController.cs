@@ -37,18 +37,19 @@ namespace WebApplication20.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult LoadImage()
+        public ActionResult LoadImage(int imageId)
         {
-            
+
             byte[] image = null;
             SqlConnection conn = new SqlConnection(@"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=testdb;Integrated Security=true;");
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = conn;
 
             cmd.CommandType = System.Data.CommandType.Text;
-            cmd.CommandText = "Select * from  Images where Id=1";
+            cmd.CommandText = "Select * from  Images where Id=@imageId";
+            cmd.Parameters.Add(new SqlParameter("@imageId", imageId));
 
-          
+
             conn.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -60,7 +61,7 @@ namespace WebApplication20.Controllers
 
             return file;
         }
-        
+
         [HttpGet]
         public ActionResult Upload()
         {
@@ -78,7 +79,7 @@ namespace WebApplication20.Controllers
             byte[] imageBytes = null;
             BinaryReader reader = new BinaryReader(file.InputStream);
             imageBytes = reader.ReadBytes((int)file.ContentLength);
-   
+
 
 
             SqlConnection conn = new SqlConnection(@"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=testdb;Integrated Security=true;");
@@ -89,14 +90,16 @@ namespace WebApplication20.Controllers
             cmd.CommandText = "Insert into Images (imgdata) values (@data)";
 
             // setup the array of bytes in the sql query here using a sqlparameter
-            cmd.Parameters.Add("@data",  SqlDbType.Image, imageBytes.Length).Value = imageBytes;
+            cmd.Parameters.Add("@data", SqlDbType.Image, imageBytes.Length).Value = imageBytes;
 
             conn.Open();
             cmd.ExecuteNonQuery();
             conn.Close();
 
-  
+
             return View(model);
         }
+
+     
     }
 }

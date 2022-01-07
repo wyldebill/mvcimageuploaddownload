@@ -1,0 +1,18 @@
+﻿@model WebApplication20.Models.MyComplexObject;
+
+<h2>This is the edit page for a complex model with bool, string, and int members</h2>
+
+@using (Html.BeginForm("ComplexObject", "Home", FormMethod.Post))
+{
+    <strong>Name </strong> @Html.EditorFor(m => m.UserName)
+    <br />
+    <br />
+    <strong>Age </strong> @Html.EditorFor(m => m.UserAge)
+    <br />
+    <br />
+    <br />
+    <strong>Married </strong> @Html.EditorFor(m => m.Married)
+    <br />
+    <br />
+    <input id="Submit" type="submit" value="submit" />
+}
